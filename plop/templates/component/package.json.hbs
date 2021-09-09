@@ -1,26 +1,23 @@
 {
-  "name": "@m2-modules/sample",
+  "name": "@m2-modules/{{ kebabCase name }}",
   "version": "0.0.1",
-  "description": "Sample react component",
+  "description": "{{ titleCase name }} react component",
   "author": "Jay Lee <jaylee.possible@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
   "license": "ISC",
-  "main": "dist/sample.js",
+  "main": "dist/{{ pascalCase name }}.js",
   "directories": {
-    "lib": "lib",
     "test": "__tests__"
   },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/m2-modules/react.git"
   },
   "scripts": {
+    "clean": "rm -rf ./dist",
     "test": "jest",
     "prebuild": "npm run test",
-    "build": "tsc",
+    "build": "npm run clean && tsc",
     "prepublish": "npm run build"
   },
   "bugs": {

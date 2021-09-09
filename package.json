@@ -1,9 +1,12 @@
 {
-  "name": "react",
-  "version": "0.0.1",
+  "private": true,
   "description": "Collection of components for React",
-  "main": "index.js",
-  "repository": "https://github.com/m2-modules/react",
   "author": "Jay Lee <jaylee.possible@gmail.com>",
-  "license": "MIT"
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {},
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
 }

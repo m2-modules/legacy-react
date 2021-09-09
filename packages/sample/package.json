@@ -18,7 +18,10 @@
     "url": "git+https://github.com/m2-modules/react.git"
   },
   "scripts": {
-    "build": "tsc"
+    "test": "jest",
+    "prebuild": "npm run test",
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
   "bugs": {
     "url": "https://github.com/m2-modules/react/issues"
@@ -27,6 +30,9 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "jest": "^27.1.1",
+    "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
   }
 }

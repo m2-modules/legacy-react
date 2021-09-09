@@ -6,6 +6,8 @@
     "packages/*"
   ],
   "scripts": {
+    "test": "lerna run test",
+    "build": "lerna run build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -17,6 +19,7 @@
     "@storybook/react": "^6.3.8",
     "babel-loader": "^8.2.2",
     "lerna": "^4.0.0",
+    "plop": "^2.7.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "typescript": "^4.4.2"

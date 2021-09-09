@@ -1,0 +1,32 @@
+{
+  "name": "@m2-modules/sample",
+  "version": "0.0.1",
+  "description": "Sample react component",
+  "author": "Jay Lee <jaylee.possible@gmail.com>",
+  "homepage": "https://github.com/m2-modules/react#readme",
+  "license": "ISC",
+  "main": "dist/sample.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m2-modules/react.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/m2-modules/react/issues"
+  },
+  "dependencies": {
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  }
+}

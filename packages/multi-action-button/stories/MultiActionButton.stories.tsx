@@ -1,8 +1,8 @@
 import React from 'react'
 
+import DoneIcon from '@material-ui/icons/Done'
 import { ComponentMeta } from '@storybook/react'
 
-import { SubButton } from '../interfaces'
 import MultiActionButton, {
   MultiActionButtonPropsType,
 } from '../src/MultiActionButton'
@@ -11,23 +11,94 @@ export default {
   title: 'MultiActionButton',
   component: MultiActionButton,
   argTypes: {
-    name: {
-      control: { type: 'text' },
-    },
+    name: { control: { type: 'text' } },
+    dropdown: { control: { type: 'boolean' } },
+    reverse: { control: { type: 'boolean' } },
   },
 } as ComponentMeta<typeof MultiActionButton>
 
-export const Basic = (args: MultiActionButtonPropsType) => (
-  <MultiActionButton
-    name={args.name || 'Multi Action Button'}
-    action={() => console.log('Action!')}
-    subButtons={
-      args.subButtons ||
-      ([
-        { name: 'Sub Action 1' },
-        { name: 'Sub Action 2' },
-        { name: 'Sub Action 3' },
-      ] as SubButton[])
-    }
-  />
-)
+const Template: (args: MultiActionButtonPropsType) => JSX.Element = (
+  args: MultiActionButtonPropsType
+) => <MultiActionButton {...args} />
+
+export const PrimaryOnly = Template.bind({})
+PrimaryOnly.args = {
+  name: 'Primary action button',
+  action: () => console.log('Primary Action'),
+} as MultiActionButtonPropsType
+
+export const WithSubActions = Template.bind({})
+WithSubActions.args = {
+  ...PrimaryOnly.args,
+  subButtons: [
+    { name: 'Sub action button 1', action: () => console.log('Sub action 1') },
+    { name: 'Sub action button 2', action: () => console.log('Sub action 2') },
+    { name: 'Sub action button 3', action: () => console.log('Sub action 3') },
+  ],
+} as MultiActionButtonPropsType
+
+export const WithComponentIcons = Template.bind({})
+WithComponentIcons.args = {
+  ...WithSubActions.args,
+  icon: <DoneIcon />,
+  subButtons: [
+    {
+      name: 'Sub action button 1',
+      action: () => console.log('Sub action 1'),
+      icon: <DoneIcon />,
+    },
+    {
+      name: 'Sub action button 2',
+      action: () => console.log('Sub action 2'),
+      icon: <DoneIcon />,
+    },
+    {
+      name: 'Sub action button 3',
+      action: () => console.log('Sub action 3'),
+      icon: <DoneIcon />,
+    },
+  ],
+} as MultiActionButtonPropsType
+
+export const WithSrcIcons = Template.bind({})
+WithSrcIcons.args = {
+  ...WithSubActions.args,
+  icon: {
+    src: 'https://picsum.photos/50/50.jpg',
+    alt: 'Randomly created',
+    width: '30px',
+    height: '100px',
+  },
+  subButtons: [
+    {
+      name: 'Sub action button 1',
+      action: () => console.log('Sub action 1'),
+      icon: {
+        src: 'https://picsum.photos/50/50.jpg',
+        alt: 'Randomly created',
+        width: '30px',
+        height: '100px',
+      },
+    },
+    {
+      name: 'Sub action button 2',
+      action: () => console.log('Sub action 2'),
+      icon: {
+        src: 'https://picsum.photos/50/50.jpg',
+        alt: 'Randomly created',
+        width: '30px',
+        height: '100px',
+      },
+    },
+    {
+      name: 'Sub action button 3',
+      action: () => console.log('Sub action 3'),
+      icon: {
+        src: 'https://picsum.photos/50/50.jpg',
+        alt: 'Randomly created',
+        width: '30px',
+        height: '100px',
+      },
+    },
+  ],
+} as MultiActionButtonPropsType

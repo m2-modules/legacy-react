@@ -12,13 +12,35 @@ export default {
   },
 } as ComponentMeta<typeof InfiniteList>
 
-export const Basic = (args: InfiniteListPropsType) => (
+const Template = (args: InfiniteListPropsType) => (
   <InfiniteList {...args}>
-    <div>Card 1</div>
-    <div>Card 2</div>
-    <div>Card 3</div>
-    <div>Card 4</div>
-    <div>Card 5</div>
-    <div>Card 6</div>
+    {Array(100)
+      .fill('Card')
+      .map((item: string, idx: number) => (
+        <div key={idx}>
+          {item} {idx}
+        </div>
+      ))}
   </InfiniteList>
 )
+
+export const Basic = Template.bind({})
+
+export const AddableList = Template.bind({})
+AddableList.args = {
+  fetchHandler: async (page: number): Promise<JSX.Element[]> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(
+          Array(100)
+            .fill('Card')
+            .map((item: string, idx: number) => (
+              <div key={(page - 1) * 100 + idx}>
+                {item} {(page - 1) * 100 + idx}
+              </div>
+            ))
+        )
+      }, 2000)
+    })
+  },
+} as InfiniteListPropsType

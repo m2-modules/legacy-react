@@ -14,6 +14,9 @@ module.exports = (plop) => {
         destination: '../packages/{{ kebabCase name }}',
         base: 'templates/component',
         templateFiles: 'templates/component/*',
+        globOptions: {
+          dot: true,
+        },
       },
       {
         type: 'add',

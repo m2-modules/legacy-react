@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react'
+
 export interface ButtonIcon {
   alt: string
   src: string
@@ -7,5 +9,5 @@ export interface ButtonIcon {
 export interface SubButton {
   icon?: ButtonIcon | JSX.Element
   name: string
-  action: (...args: any) => any
+  action: <T>(args: MouseEvent<HTMLButtonElement>) => T
 }

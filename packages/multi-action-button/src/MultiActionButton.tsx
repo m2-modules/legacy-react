@@ -1,10 +1,8 @@
-import React, { KeyboardEvent, useCallback } from 'react'
-
-import styled from 'styled-components'
+import { ButtonIcon, SubButton } from './interfaces'
+import React, { KeyboardEvent, MouseEvent, useCallback } from 'react'
 
 import MoreHorizontalIcon from '@material-ui/icons/MoreHoriz'
-
-import { ButtonIcon, SubButton } from '../interfaces'
+import styled from 'styled-components'
 
 const PrimaryWrapperDiv = styled.div`
   display: inline-flex;
@@ -80,12 +78,13 @@ const SubButtonWrapperList = styled.ul`
 
 const SubButtonIconImage = styled.img``
 
-export declare type MultiActionButtonPropsType = {
+export type MultiActionButtonPropsType = {
   name: string
-  icon?: ButtonIcon
+  icon?: ButtonIcon | JSX.Element
   reverse?: boolean
   dropdown?: boolean
-  action: (...args: any) => any
+  moreButtonIcon?: ButtonIcon | JSX.Element
+  action: <T>(event: MouseEvent<HTMLButtonElement>) => T
   subButtons?: SubButton[]
 }
 
@@ -95,6 +94,7 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
     icon,
     reverse = false,
     dropdown = false,
+    moreButtonIcon = <StyledMoreHorizontalIcon />,
     action,
     subButtons,
   } = props
@@ -138,9 +138,7 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
       </StyledButton>
       {subButtons?.length ? (
         <>
-          <MoreButton>
-            <StyledMoreHorizontalIcon fontSize="small" />
-          </MoreButton>
+          <MoreButton>{renderButtonIcon(moreButtonIcon)}</MoreButton>
 
           <SubButtonWrapperList
             id="sub-button-wrapper"

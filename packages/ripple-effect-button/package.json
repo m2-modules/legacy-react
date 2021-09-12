@@ -2,7 +2,7 @@
   "name": "@m2-modules/ripple-effect-button",
   "version": "0.0.1",
   "description": "Ripple Effect Button react component",
-  "author": "Jay Lee <jaylee.possible@gmail.com>",
+  "author": "Ingyu Lee <gincheong2@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
   "license": "ISC",
   "main": "dist/RippleEffectButton.js",

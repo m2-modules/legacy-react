@@ -1,14 +1,20 @@
 import React, { UIEvent, useCallback, useState } from 'react'
 
+import styled from 'styled-components'
+
+const StyledList = styled.ul`
+  overflow: auto;
+  list-style: none;
+`
+
 export type InfiniteListPropsType = {
-  fetchHandler?: (page: number) => any
+  fetchHandler?: <T>(page: number) => T
   threshHoldRate?: number
-  isOrderedList?: boolean
   children: JSX.Element[]
 }
 
 const InfiniteList = (props: InfiniteListPropsType): JSX.Element => {
-  const { fetchHandler, threshHoldRate = 80, isOrderedList = false } = props
+  const { fetchHandler, threshHoldRate = 80 } = props
   const [page, setPage] = useState<number>(1)
   const [children, setChildren] = useState<JSX.Element[]>(props.children)
 
@@ -23,26 +29,20 @@ const InfiniteList = (props: InfiniteListPropsType): JSX.Element => {
           const newChildren: JSX.Element[] = await fetchHandler(page + 1)
           if (children?.length) {
             setChildren([...children, ...newChildren])
+            setPage(page + 1)
           }
-          setPage(page + 1)
         }
       }
     },
     [fetchHandler, children, page]
   )
 
-  return isOrderedList ? (
-    <ol onScroll={onScrollHandler}>
+  return (
+    <StyledList onScroll={onScrollHandler}>
       {(children || []).map((child: JSX.Element, idx: number) => (
         <li key={`item-${idx}`}>{child}</li>
       ))}
-    </ol>
-  ) : (
-    <ul onScroll={onScrollHandler}>
-      {(children || []).map((child: JSX.Element, idx: number) => (
-        <li key={`item-${idx}`}>{child}</li>
-      ))}
-    </ul>
+    </StyledList>
   )
 }
 

@@ -1,11 +1,11 @@
-import React from 'react'
-
-import DoneIcon from '@material-ui/icons/Done'
-import { ComponentMeta } from '@storybook/react'
-
 import MultiActionButton, {
   MultiActionButtonPropsType,
 } from '../src/MultiActionButton'
+
+import { ComponentMeta } from '@storybook/react'
+import DoneIcon from '@material-ui/icons/Done'
+import MoreVerticalIcon from '@material-ui/icons/MoreVert'
+import React from 'react'
 
 export default {
   title: 'MultiActionButton',
@@ -99,6 +99,30 @@ WithSrcIcons.args = {
         width: '30px',
         height: '100px',
       },
+    },
+  ],
+} as MultiActionButtonPropsType
+
+export const CustomizedMoreButton = Template.bind({})
+CustomizedMoreButton.args = {
+  name: 'Primary action button',
+  action: () => console.log('Primary Action'),
+  moreButtonIcon: <MoreVerticalIcon />,
+  subButtons: [
+    {
+      name: 'Sub action button 1',
+      action: () => console.log('Sub action 1'),
+      icon: <DoneIcon />,
+    },
+    {
+      name: 'Sub action button 2',
+      action: () => console.log('Sub action 2'),
+      icon: <DoneIcon />,
+    },
+    {
+      name: 'Sub action button 3',
+      action: () => console.log('Sub action 3'),
+      icon: <DoneIcon />,
     },
   ],
 } as MultiActionButtonPropsType

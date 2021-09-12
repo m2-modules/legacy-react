@@ -1,11 +1,11 @@
 {
-  "name": "@m2-modules/{{ kebabCase name }}",
+  "name": "@m2-modules/ripple-effect-button",
   "version": "0.0.1",
-  "description": "{{ titleCase name }} react component",
-  "author": "{{ authorName }} <{{ authorEmail }}>",
+  "description": "Ripple Effect Button react component",
+  "author": "Ingyu Lee <gincheong2@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
   "license": "ISC",
-  "main": "dist/{{ pascalCase name }}.js",
+  "main": "dist/RippleEffectButton.js",
   "directories": {
     "test": "__tests__"
   },
@@ -24,7 +24,9 @@
     "url": "https://github.com/m2-modules/react/issues"
   },
   "dependencies": {
-    "react": "^17.0.2"
+    "@types/styled-components": "^5.1.14",
+    "react": "^17.0.2",
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",

@@ -1,11 +1,11 @@
 {
-  "name": "@m2-modules/{{ kebabCase name }}",
+  "name": "@m2-modules/multi-action-button",
   "version": "0.0.1",
-  "description": "{{ titleCase name }} react component",
-  "author": "{{ authorName }} <{{ authorEmail }}>",
+  "description": "Multi Action Button react component",
+  "author": "Jay Lee <jaylee.possible@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
   "license": "ISC",
-  "main": "dist/{{ pascalCase name }}.js",
+  "main": "dist/MultiActionButton.js",
   "directories": {
     "test": "__tests__"
   },
@@ -24,10 +24,14 @@
     "url": "https://github.com/m2-modules/react/issues"
   },
   "dependencies": {
-    "react": "^17.0.2"
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "react": "^17.0.2",
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
+    "@types/styled-components": "^5.1.14",
     "jest": "^27.1.1",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"

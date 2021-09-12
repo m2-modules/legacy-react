@@ -10,5 +10,9 @@
     "declaration": true,
     "declarationMap": true
   },
-  "exclude": ["__tests__", "stories"]
+  "exclude": [
+    "__tests__",
+    "stories",
+    "dist"
+  ]
 }

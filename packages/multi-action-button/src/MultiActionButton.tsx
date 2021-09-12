@@ -1,10 +1,8 @@
+import { ButtonIcon, SubButton } from './interfaces'
 import React, { KeyboardEvent, useCallback } from 'react'
 
-import styled from 'styled-components'
-
 import MoreHorizontalIcon from '@material-ui/icons/MoreHoriz'
-
-import { ButtonIcon, SubButton } from '../interfaces'
+import styled from 'styled-components'
 
 const PrimaryWrapperDiv = styled.div`
   display: inline-flex;

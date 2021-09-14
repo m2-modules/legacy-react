@@ -44,14 +44,14 @@ const StyledSpan = styled.span<IStyledSpan>`
   transition: font-size ease-out 0.1s,
     margin-top ease-out 0.1s;
   font-size: ${props => props.focus && '0.8em'};
-  margin-top: ${props => props.focus&& '-20px'};
+  margin-top: ${props => props.focus && '-20px'};
 `;
 
 const StyledInput = styled.input`
   width: fill-available;
   border: none;
   outline: none;
-
+  background-color: transparent;
 `;
 
 const FloatingLabelInput = (props: FloatingLabelInputProps): JSX.Element => {

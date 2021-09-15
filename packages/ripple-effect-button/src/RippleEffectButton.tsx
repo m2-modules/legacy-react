@@ -24,13 +24,17 @@ const RippleEffectButton = (props: RippleEffectButtonProps): JSX.Element => {
     const $target = buttonRef.current as HTMLButtonElement;
     const rect = $target.getBoundingClientRect();
 
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+
+    // work on Keyboard Click (Enter, Spacebar)
+    if (event.clientX === 0 && event.clientY === 0) {
+      x = $target.clientWidth / 2;
+      y = $target.clientHeight / 2;
+    }
+
     setRipples(prevState => {
-      return { ...prevState, 
-        [rippleKey]: {
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top
-        }
-      }
+      return { ...prevState, [rippleKey]: { x, y } }
     });
     setRippleKey(prevState => prevState + 1);
   };

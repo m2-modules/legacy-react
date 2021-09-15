@@ -1,8 +1,11 @@
-import { ButtonIcon, SubButton } from './interfaces'
 import React, { KeyboardEvent, MouseEvent, useCallback } from 'react'
 
-import MoreHorizontalIcon from '@material-ui/icons/MoreHoriz'
 import styled from 'styled-components'
+
+import RippleEffectButton from '@m2-modules/ripple-effect-button'
+import MoreHorizontalIcon from '@material-ui/icons/MoreHoriz'
+
+import { ButtonIcon, SubButton } from './interfaces'
 
 const PrimaryWrapperDiv = styled.div`
   display: inline-flex;
@@ -30,7 +33,36 @@ const StyledButton = styled.button`
   }
 `
 
+const StyledRippleEffectButton = styled(RippleEffectButton)`
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  height: ${(props: { height?: string }) => props.height || '30px'};
+  box-sizing: border-box;
+  outline: none;
+  overflow: hidden;
+  &:focus {
+    outline: 1px solid #aaa;
+    outline-offset: -5px;
+  }
+`
+
 const MoreButton = styled(StyledButton)`
+  border-inline-start: 1px solid black;
+  position: relative;
+  & + ul#sub-button-wrapper {
+    pointer-events: none;
+    opacity: 0;
+  }
+  &:focus + ul#sub-button-wrapper {
+    pointer-events: auto;
+    opacity: 1;
+  }
+`
+
+const RippleEffectMoreButton = styled(StyledRippleEffectButton)`
   border-inline-start: 1px solid black;
   position: relative;
   & + ul#sub-button-wrapper {
@@ -81,6 +113,7 @@ const SubButtonIconImage = styled.img``
 export type MultiActionButtonPropsType = {
   name: string
   icon?: ButtonIcon | JSX.Element
+  rippleColor?: 'light' | 'dark'
   reverse?: boolean
   dropdown?: boolean
   moreButtonIcon?: ButtonIcon | JSX.Element
@@ -92,6 +125,7 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
   const {
     name,
     icon,
+    rippleColor,
     reverse = false,
     dropdown = false,
     moreButtonIcon = <StyledMoreHorizontalIcon />,
@@ -99,12 +133,12 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
     subButtons,
   } = props
 
-  const moveFocus = useCallback((event: KeyboardEvent<HTMLButtonElement>) => {
+  const moveFocus = useCallback((event: KeyboardEvent<HTMLLIElement>) => {
     if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
       const nextButton:
         | HTMLButtonElement
         | null
-        | undefined = event.currentTarget.parentElement?.nextElementSibling?.querySelector(
+        | undefined = event.currentTarget.nextElementSibling?.querySelector(
         'button'
       )
       if (nextButton) nextButton.focus()
@@ -112,7 +146,7 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
       const prevButton:
         | HTMLButtonElement
         | null
-        | undefined = event.currentTarget.parentElement?.previousElementSibling?.querySelector(
+        | undefined = event.currentTarget.previousElementSibling?.querySelector(
         'button'
       )
       if (prevButton) prevButton.focus()
@@ -132,30 +166,69 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
 
   return (
     <PrimaryWrapperDiv className={reverse ? 'reverse' : ''}>
-      <StyledButton onClick={action}>
-        {icon ? renderButtonIcon(icon) : ''}
-        {name}
-      </StyledButton>
-      {subButtons?.length ? (
+      {rippleColor ? (
         <>
-          <MoreButton>{renderButtonIcon(moreButtonIcon)}</MoreButton>
+          <StyledRippleEffectButton rippleColor={rippleColor} onClick={action}>
+            {icon ? renderButtonIcon(icon) : ''}
+            {name}
+          </StyledRippleEffectButton>
 
-          <SubButtonWrapperList
-            id="sub-button-wrapper"
-            className={dropdown ? 'dropdown' : ''}
-          >
-            {subButtons.map((subButton: SubButton, idx: number) => (
-              <li key={`sub-button-${idx}`}>
-                <StyledButton onClick={subButton.action} onKeyDown={moveFocus}>
-                  {subButton.icon ? renderButtonIcon(subButton.icon) : ''}
-                  {subButton.name}
-                </StyledButton>
-              </li>
-            ))}
-          </SubButtonWrapperList>
+          {subButtons?.length ? (
+            <>
+              <RippleEffectMoreButton rippleColor={rippleColor}>
+                {renderButtonIcon(moreButtonIcon)}
+              </RippleEffectMoreButton>
+
+              <SubButtonWrapperList
+                id="sub-button-wrapper"
+                className={dropdown ? 'dropdown' : ''}
+              >
+                {subButtons.map((subButton: SubButton, idx: number) => (
+                  <li key={`sub-button-${idx}`} onKeyDown={moveFocus}>
+                    <StyledRippleEffectButton
+                      rippleColor="dark"
+                      onClick={subButton.action}
+                    >
+                      {subButton.icon ? renderButtonIcon(subButton.icon) : ''}
+                      {subButton.name}
+                    </StyledRippleEffectButton>
+                  </li>
+                ))}
+              </SubButtonWrapperList>
+            </>
+          ) : (
+            ''
+          )}
         </>
       ) : (
-        ''
+        <>
+          <StyledButton onClick={action}>
+            {icon ? renderButtonIcon(icon) : ''}
+            {name}
+          </StyledButton>
+
+          {subButtons?.length ? (
+            <>
+              <MoreButton>{renderButtonIcon(moreButtonIcon)}</MoreButton>
+
+              <SubButtonWrapperList
+                id="sub-button-wrapper"
+                className={dropdown ? 'dropdown' : ''}
+              >
+                {subButtons.map((subButton: SubButton, idx: number) => (
+                  <li key={`sub-button-${idx}`} onKeyDown={moveFocus}>
+                    <StyledButton onClick={subButton.action}>
+                      {subButton.icon ? renderButtonIcon(subButton.icon) : ''}
+                      {subButton.name}
+                    </StyledButton>
+                  </li>
+                ))}
+              </SubButtonWrapperList>
+            </>
+          ) : (
+            ''
+          )}
+        </>
       )}
     </PrimaryWrapperDiv>
   )

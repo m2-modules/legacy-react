@@ -1,11 +1,12 @@
+import React from 'react'
+
+import DoneIcon from '@material-ui/icons/Done'
+import MoreVerticalIcon from '@material-ui/icons/MoreVert'
+import { ComponentMeta } from '@storybook/react'
+
 import MultiActionButton, {
   MultiActionButtonPropsType,
 } from '../src/MultiActionButton'
-
-import { ComponentMeta } from '@storybook/react'
-import DoneIcon from '@material-ui/icons/Done'
-import MoreVerticalIcon from '@material-ui/icons/MoreVert'
-import React from 'react'
 
 export default {
   title: 'MultiActionButton',
@@ -14,6 +15,10 @@ export default {
     name: { control: { type: 'text' } },
     dropdown: { control: { type: 'boolean' } },
     reverse: { control: { type: 'boolean' } },
+    rippleColor: {
+      options: ['dark', 'light', undefined],
+      control: { type: 'select' },
+    },
   },
 } as ComponentMeta<typeof MultiActionButton>
 

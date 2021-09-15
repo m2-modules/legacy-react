@@ -21,6 +21,9 @@
     "build": "npm run clean && tsc",
     "prepublish": "npm run build"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/m2-modules/react/issues"
   },

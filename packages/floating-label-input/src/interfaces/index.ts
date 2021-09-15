@@ -1,15 +1,15 @@
 export interface IStyledLabel {
-  focus: boolean;
-  underlineColor?: string;
+  focus: boolean
+  underlineColor?: string
 }
 
 export interface IStyledSpan {
-  focus: boolean;
+  focus: boolean
 }
 
 interface Props {
-  label: string;
-  underlineColor?: string;
+  label: string
+  underlineColor?: string
 }
 
-export type FloatingLabelInputProps = Props & React.InputHTMLAttributes<any>;
+export type FloatingLabelInputProps = Props & React.InputHTMLAttributes<any>

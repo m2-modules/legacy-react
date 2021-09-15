@@ -74,7 +74,7 @@ const RippleEffectButton = (props: RippleEffectButtonProps): JSX.Element => {
 export interface RippleEffectButtonProps {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
-  rippleColor: 'light' | 'dark';
+  rippleColor?: string;
 }
 
 type RippleValues = {

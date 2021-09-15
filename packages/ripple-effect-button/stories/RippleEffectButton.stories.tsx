@@ -12,8 +12,7 @@ export default {
       control: { type: 'text' }
     },
     rippleColor: {
-      options: ['light', 'dark'],
-      control: { type: 'radio' },
+      control: { type: 'text' },
     },
   },
 } as ComponentMeta<typeof RippleEffectButton>
@@ -27,10 +26,8 @@ const Template = (args: RippleEffectButtonProps) => {
   )
 };
 
-export const LightColorButton = Template.bind({});
-LightColorButton.args = {
-  rippleColor: 'dark',
-};
+export const Default = Template.bind({});
+Default.args = {};
 
 export const DarkColorButton = Template.bind({});
 DarkColorButton.args = {
@@ -38,6 +35,6 @@ DarkColorButton.args = {
     backgroundColor: 'black',
     color: 'white',
   },
-  rippleColor: 'light',
+  rippleColor: 'rgba(255, 255, 255, 0.5)',
 };
 

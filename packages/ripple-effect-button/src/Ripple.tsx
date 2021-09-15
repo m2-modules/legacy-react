@@ -2,17 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface StyledRippleProps {
-  rippleColor: string;
+  rippleColor?: string;
 }
 
 const StyledRipple = styled.div<StyledRippleProps>`
-  background: ${props => {
-    if (props.rippleColor === 'light') {
-      return 'rgba(255, 255, 255, 0.5)';
-    } else if (props.rippleColor === 'dark') {
-      return 'rgba(0, 0, 0, 0.5)';
-    }
-  }};
+  background: ${props => props.rippleColor ?? 'rgba(0, 0, 0, 0.5)' };
 
   width: 10px;
   height: 10px;
@@ -48,7 +42,7 @@ interface Props {
     x: number,
     y: number
   };
-  rippleColor: 'light' | 'dark';
+  rippleColor?: string;
 }
 
 export default Ripple;

@@ -5,7 +5,7 @@
   "author": "gincheong2 <gincheong2@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
   "license": "ISC",
-  "main": "dist/FloatingLabelInput.js",
+  "main": "dist/index.js",
   "directories": {
     "test": "__tests__"
   },

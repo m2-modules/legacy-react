@@ -99,6 +99,12 @@ module.exports = (plop) => {
           '../packages/{{ kebabCase name }}/stories/{{ pascalCase name }}.stories.tsx',
         templateFile: 'templates/component/stories/Component.stories.tsx.hbs',
       },
+      {
+        type: 'add',
+        path:
+          '../packages/{{ kebabCase name }}/src/index.ts',
+        templateFile: 'templates/component/src/index.ts.hbs',
+      }
     ],
   })
 }

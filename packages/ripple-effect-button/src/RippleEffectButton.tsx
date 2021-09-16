@@ -6,8 +6,6 @@ import Ripple from './Ripple'
 const StyledButton = styled.button`
   position: relative;
   overflow: hidden;
-
-  padding: 10px;
   background-color: white;
   cursor: pointer;
 `

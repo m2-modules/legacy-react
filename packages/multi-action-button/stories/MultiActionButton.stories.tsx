@@ -4,9 +4,7 @@ import DoneIcon from '@material-ui/icons/Done'
 import MoreVerticalIcon from '@material-ui/icons/MoreVert'
 import { ComponentMeta } from '@storybook/react'
 
-import MultiActionButton, {
-  MultiActionButtonPropsType,
-} from '../src/MultiActionButton'
+import MultiActionButton, { MultiActionButtonProps } from '../src'
 
 export default {
   title: 'MultiActionButton',
@@ -16,21 +14,20 @@ export default {
     dropdown: { control: { type: 'boolean' } },
     reverse: { control: { type: 'boolean' } },
     rippleColor: {
-      options: ['dark', 'light', undefined],
-      control: { type: 'select' },
+      control: { type: 'color' },
     },
   },
 } as ComponentMeta<typeof MultiActionButton>
 
-const Template: (args: MultiActionButtonPropsType) => JSX.Element = (
-  args: MultiActionButtonPropsType
+const Template: (args: MultiActionButtonProps) => JSX.Element = (
+  args: MultiActionButtonProps
 ) => <MultiActionButton {...args} />
 
 export const PrimaryOnly = Template.bind({})
 PrimaryOnly.args = {
   name: 'Primary action button',
   action: () => console.log('Primary Action'),
-} as MultiActionButtonPropsType
+} as MultiActionButtonProps
 
 export const WithSubActions = Template.bind({})
 WithSubActions.args = {
@@ -40,7 +37,7 @@ WithSubActions.args = {
     { name: 'Sub action button 2', action: () => console.log('Sub action 2') },
     { name: 'Sub action button 3', action: () => console.log('Sub action 3') },
   ],
-} as MultiActionButtonPropsType
+} as MultiActionButtonProps
 
 export const WithComponentIcons = Template.bind({})
 WithComponentIcons.args = {
@@ -63,7 +60,7 @@ WithComponentIcons.args = {
       icon: <DoneIcon />,
     },
   ],
-} as MultiActionButtonPropsType
+} as MultiActionButtonProps
 
 export const WithSrcIcons = Template.bind({})
 WithSrcIcons.args = {
@@ -106,7 +103,7 @@ WithSrcIcons.args = {
       },
     },
   ],
-} as MultiActionButtonPropsType
+} as MultiActionButtonProps
 
 export const CustomizedMoreButton = Template.bind({})
 CustomizedMoreButton.args = {
@@ -130,4 +127,4 @@ CustomizedMoreButton.args = {
       icon: <DoneIcon />,
     },
   ],
-} as MultiActionButtonPropsType
+} as MultiActionButtonProps

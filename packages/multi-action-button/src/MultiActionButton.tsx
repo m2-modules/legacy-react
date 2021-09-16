@@ -1,11 +1,11 @@
-import React, { KeyboardEvent, MouseEvent, useCallback } from 'react'
+import React, { KeyboardEvent, useCallback } from 'react'
 
 import styled from 'styled-components'
 
 import RippleEffectButton from '@m2-modules/ripple-effect-button'
 import MoreHorizontalIcon from '@material-ui/icons/MoreHoriz'
 
-import { ButtonIcon, SubButton } from './interfaces'
+import { ButtonIcon, MultiActionButtonProps, SubButton } from './interfaces'
 
 const PrimaryWrapperDiv = styled.div`
   display: inline-flex;
@@ -23,7 +23,6 @@ const StyledButton = styled.button`
   align-items: center;
   border: none;
   background-color: transparent;
-  height: ${(props: { height?: string }) => props.height || '30px'};
   box-sizing: border-box;
   outline: none;
   overflow: hidden;
@@ -39,7 +38,6 @@ const StyledRippleEffectButton = styled(RippleEffectButton)`
   align-items: center;
   border: none;
   background-color: transparent;
-  height: ${(props: { height?: string }) => props.height || '30px'};
   box-sizing: border-box;
   outline: none;
   overflow: hidden;
@@ -110,18 +108,7 @@ const SubButtonWrapperList = styled.ul`
 
 const SubButtonIconImage = styled.img``
 
-export type MultiActionButtonPropsType = {
-  name: string
-  icon?: ButtonIcon | JSX.Element
-  rippleColor?: 'light' | 'dark'
-  reverse?: boolean
-  dropdown?: boolean
-  moreButtonIcon?: ButtonIcon | JSX.Element
-  action: <T>(event: MouseEvent<HTMLButtonElement>) => T
-  subButtons?: SubButton[]
-}
-
-const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
+const MultiActionButton = (props: MultiActionButtonProps): JSX.Element => {
   const {
     name,
     icon,
@@ -186,7 +173,7 @@ const MultiActionButton = (props: MultiActionButtonPropsType): JSX.Element => {
                 {subButtons.map((subButton: SubButton, idx: number) => (
                   <li key={`sub-button-${idx}`} onKeyDown={moveFocus}>
                     <StyledRippleEffectButton
-                      rippleColor="dark"
+                      rippleColor={rippleColor}
                       onClick={subButton.action}
                     >
                       {subButton.icon ? renderButtonIcon(subButton.icon) : ''}

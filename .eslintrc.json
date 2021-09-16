@@ -23,5 +23,10 @@
     "rules": {},
     "ignorePatterns": [
         "packages/*/dist"
-    ]
+    ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
 }

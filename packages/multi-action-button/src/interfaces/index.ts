@@ -11,3 +11,14 @@ export interface SubButton {
   name: string
   action: <T>(args: MouseEvent<HTMLButtonElement>) => T
 }
+
+export interface MultiActionButtonProps {
+  name: string
+  icon?: ButtonIcon | JSX.Element
+  rippleColor?: string
+  reverse?: boolean
+  dropdown?: boolean
+  moreButtonIcon?: ButtonIcon | JSX.Element
+  action: <T>(event: MouseEvent<HTMLButtonElement>) => T
+  subButtons?: SubButton[]
+}

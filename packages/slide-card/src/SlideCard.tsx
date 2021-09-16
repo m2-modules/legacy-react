@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 
 import styled from 'styled-components'
 
+import CardIndicator from './CardIndicator'
 import {
   IViewPartProps,
   SlideCardProps,
@@ -9,6 +10,7 @@ import {
 } from './interfaces'
 
 const ViewPart = styled.div<IViewPartProps>`
+  position: relative;
   flex: 1;
   display: grid;
   grid-template-columns: 1fr;
@@ -32,19 +34,40 @@ const ViewPart = styled.div<IViewPartProps>`
 `
 
 const SlideCard = (props: SlideCardProps): JSX.Element => {
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
+
+  const onScrollHandler = useCallback(() => {
+    console.log('scrolling')
+  }, [])
+
   const width: string | undefined = props.width
   const height: string | undefined = props.height
   const direction: SlideDirectionType = props.direction || 'horizontal'
   const fastSeeking: boolean = props.fastSeeking || false
+  const indicator: boolean = props.indicator || true
+  const emphasizeColor: string | undefined = props.emphasizeColor
+
+  const children: JSX.Element[] = props.children
 
   return (
     <ViewPart
+      onScroll={onScrollHandler}
       width={width}
       height={height}
       direction={direction}
       fastSeeking={fastSeeking}
     >
-      {props.children}
+      {children}
+
+      {indicator ? (
+        <CardIndicator
+          cardCount={children.length}
+          currentCardIndex={currentCardIndex}
+          emphasizeColor={emphasizeColor}
+        />
+      ) : (
+        ''
+      )}
     </ViewPart>
   )
 }

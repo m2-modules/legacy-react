@@ -17,6 +17,7 @@ const ViewPart = styled.div<IViewPartProps>`
   position: relative;
   flex: 1;
   display: grid;
+  gap: 10px;
   grid-template-columns: 1fr;
   grid-auto-flow: ${(props) =>
     props.direction === 'horizontal' ? 'column' : 'row'};
@@ -29,11 +30,8 @@ const ViewPart = styled.div<IViewPartProps>`
     display: none;
   }
   & > .card-item {
-    display: grid;
-    align-content: center;
     width: inherit;
     height: inherit;
-    object-fit: none;
     scroll-snap-align: start;
     scroll-snap-stop: ${(props) => (props.fastSeeking ? 'normal' : 'always')};
   }

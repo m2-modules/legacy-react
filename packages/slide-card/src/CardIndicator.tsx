@@ -11,7 +11,7 @@ const IndicatorContainer = styled.div`
   position: absolute;
   display: inline-flex;
   gap: 5px;
-  bottom: 20px;
+  bottom: 10px;
 
   &.horizontal {
     flex-direction: row;
@@ -21,8 +21,7 @@ const IndicatorContainer = styled.div`
 
   &.vertical {
     flex-direction: column;
-    right: 20px;
-    bottom: 20px;
+    right: 10px;
   }
 `
 

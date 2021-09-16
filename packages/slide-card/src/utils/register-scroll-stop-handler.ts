@@ -1,7 +1,7 @@
 const registerScrollStopHandler = (
   element: HTMLElement,
   handler: () => void,
-  interval = 250
+  interval = 100
 ): void => {
   let timer: NodeJS.Timeout
 

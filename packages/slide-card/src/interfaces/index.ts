@@ -26,4 +26,5 @@ export interface CardIndicatorProps {
   cardCount: number
   currentCardIndex: number
   indicatorColor?: string
+  direction: SlideDirectionType
 }

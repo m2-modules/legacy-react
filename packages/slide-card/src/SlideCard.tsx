@@ -109,6 +109,7 @@ const SlideCard = (props: SlideCardProps): JSX.Element => {
           cardCount={children.length}
           currentCardIndex={currentCardIndex}
           indicatorColor={indicatorColor}
+          direction={direction}
         />
       ) : (
         ''

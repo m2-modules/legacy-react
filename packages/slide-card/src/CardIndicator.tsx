@@ -1,16 +1,29 @@
-import { CardIndicatorProps, ICircleProps } from './interfaces'
+import {
+  CardIndicatorProps,
+  ICircleProps,
+  SlideDirectionType,
+} from './interfaces'
 
 import React from 'react'
 import styled from 'styled-components'
 
 const IndicatorContainer = styled.div`
   position: absolute;
-  height: 10px;
   display: inline-flex;
   gap: 5px;
-  left: 50%;
-  transform: translateX(-50%);
   bottom: 20px;
+
+  &.horizontal {
+    flex-direction: row;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.vertical {
+    flex-direction: column;
+    right: 20px;
+    bottom: 20px;
+  }
 `
 
 const Circle = styled.span<ICircleProps>`
@@ -26,10 +39,11 @@ const Circle = styled.span<ICircleProps>`
 const CardIndicator = (props: CardIndicatorProps): JSX.Element => {
   const cardCount: number = props.cardCount
   const currentCardIndex: number = props.currentCardIndex
-  const indicatorColor: string = props.indicatorColor || 'skyblue'
+  const indicatorColor: string = props.indicatorColor || 'white'
+  const direction: SlideDirectionType = props.direction
 
   return (
-    <IndicatorContainer>
+    <IndicatorContainer className={direction}>
       {Array(cardCount)
         .fill('')
         .map((_, idx: number) => (

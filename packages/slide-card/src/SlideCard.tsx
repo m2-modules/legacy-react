@@ -1,13 +1,17 @@
-import React, { useCallback, useState } from 'react'
-
-import styled from 'styled-components'
-
-import CardIndicator from './CardIndicator'
 import {
   IViewPartProps,
   SlideCardProps,
   SlideDirectionType,
 } from './interfaces'
+import React, { RefObject, createRef, useEffect, useState } from 'react'
+
+import CardIndicator from './CardIndicator'
+import registerScrollStopHandler from './utils/register-scroll-stop-handler'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  position: relative;
+`
 
 const ViewPart = styled.div<IViewPartProps>`
   position: relative;
@@ -24,7 +28,9 @@ const ViewPart = styled.div<IViewPartProps>`
   &::-webkit-scrollbar {
     display: none;
   }
-  & > * {
+  & > .card-item {
+    display: grid;
+    align-content: center;
     width: inherit;
     height: inherit;
     object-fit: none;
@@ -34,41 +40,80 @@ const ViewPart = styled.div<IViewPartProps>`
 `
 
 const SlideCard = (props: SlideCardProps): JSX.Element => {
-  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
-
-  const onScrollHandler = useCallback(() => {
-    console.log('scrolling')
-  }, [])
-
   const width: string | undefined = props.width
   const height: string | undefined = props.height
   const direction: SlideDirectionType = props.direction || 'horizontal'
   const fastSeeking: boolean = props.fastSeeking || false
   const indicator: boolean = props.indicator || true
-  const emphasizeColor: string | undefined = props.emphasizeColor
+  const indicatorColor: string | undefined = props.indicatorColor
 
   const children: JSX.Element[] = props.children
 
-  return (
-    <ViewPart
-      onScroll={onScrollHandler}
-      width={width}
-      height={height}
-      direction={direction}
-      fastSeeking={fastSeeking}
-    >
-      {children}
+  const containerRef: RefObject<HTMLDivElement> = createRef<HTMLDivElement>()
+  const [scrollable, setScrollable] = useState<boolean>(false)
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
 
-      {indicator ? (
+  useEffect(() => {
+    const container: HTMLDivElement | null = containerRef.current
+    if (!container) throw new Error('Failed to find container')
+
+    registerScrollStopHandler(container, () => {
+      let cardIndex: number
+      if (direction === 'horizontal') {
+        if (container.scrollLeft <= 0) {
+          cardIndex = 0
+        } else {
+          cardIndex = Math.round(container.scrollLeft / container.clientWidth)
+        }
+      } else {
+        if (container.scrollTop <= 0) {
+          cardIndex = 0
+        } else {
+          cardIndex = Math.round(container.scrollTop / container.clientHeight)
+        }
+      }
+
+      setCurrentCardIndex(cardIndex)
+    })
+  }, [direction, containerRef, setCurrentCardIndex])
+
+  useEffect(() => {
+    const container: HTMLDivElement | null = containerRef.current
+    if (!container) throw new Error('Failed to find container')
+
+    if (direction === 'horizontal') {
+      setScrollable(container.scrollWidth > container.clientWidth)
+    } else {
+      setScrollable(container.scrollHeight > container.clientHeight)
+    }
+  }, [direction, containerRef, setScrollable])
+
+  return (
+    <Wrapper>
+      <ViewPart
+        ref={containerRef}
+        width={width}
+        height={height}
+        direction={direction}
+        fastSeeking={fastSeeking}
+      >
+        {children.map((child: JSX.Element, idx: number) => (
+          <div key={`card-item-${idx}`} className="card-item">
+            {child}
+          </div>
+        ))}
+      </ViewPart>
+
+      {indicator && scrollable ? (
         <CardIndicator
           cardCount={children.length}
           currentCardIndex={currentCardIndex}
-          emphasizeColor={emphasizeColor}
+          indicatorColor={indicatorColor}
         />
       ) : (
         ''
       )}
-    </ViewPart>
+    </Wrapper>
   )
 }
 

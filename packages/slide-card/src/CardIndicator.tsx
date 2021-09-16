@@ -1,31 +1,32 @@
-import React from 'react'
-
-import styled from 'styled-components'
-
 import { CardIndicatorProps, ICircleProps } from './interfaces'
 
+import React from 'react'
+import styled from 'styled-components'
+
 const IndicatorContainer = styled.div`
-  position: fixed;
-  bottom: 10px;
-  height: 10px !important;
+  position: absolute;
+  height: 10px;
   display: inline-flex;
-  justify-content: center;
   gap: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
 `
 
 const Circle = styled.span<ICircleProps>`
-  border: 2px solid ${(props) => props.emphasizeColor};
+  border: 3px solid ${(props) => props.indicatorColor};
   background-color: ${(props) =>
-    props.active ? props.emphasizeColor : 'transparent'};
+    props.active ? props.indicatorColor : 'transparent'};
   min-width: 10px;
   min-height: 10px;
   border-radius: 50%;
+  box-shadow: 2px 2px 2px #333;
 `
 
 const CardIndicator = (props: CardIndicatorProps): JSX.Element => {
   const cardCount: number = props.cardCount
   const currentCardIndex: number = props.currentCardIndex
-  const emphasizeColor: string = props.emphasizeColor || 'skyblue'
+  const indicatorColor: string = props.indicatorColor || 'skyblue'
 
   return (
     <IndicatorContainer>
@@ -35,7 +36,7 @@ const CardIndicator = (props: CardIndicatorProps): JSX.Element => {
           <Circle
             key={idx}
             active={idx === currentCardIndex}
-            emphasizeColor={emphasizeColor}
+            indicatorColor={indicatorColor}
           />
         ))}
     </IndicatorContainer>

@@ -14,16 +14,16 @@ export interface SlideCardProps {
   fastSeeking?: boolean
   indicator?: boolean
   children: JSX.Element[]
-  emphasizeColor?: string
+  indicatorColor?: string
 }
 
 export interface ICircleProps extends React.HTMLAttributes<HTMLSpanElement> {
   active: boolean
-  emphasizeColor: string
+  indicatorColor: string
 }
 
 export interface CardIndicatorProps {
   cardCount: number
   currentCardIndex: number
-  emphasizeColor?: string
+  indicatorColor?: string
 }

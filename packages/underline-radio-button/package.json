@@ -1,0 +1,41 @@
+{
+  "name": "@m2-modules/underline-radio-button",
+  "version": "0.0.1",
+  "description": "Underline Radio Button react component",
+  "author": "gincheong2 <gincheong2@gmail.com>",
+  "homepage": "https://github.com/m2-modules/react#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "__tests__"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m2-modules/react.git"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "lint": "eslint ./",
+    "test": "jest",
+    "prebuild": "npm run lint && npm run test",
+    "build": "npm run clean && tsc",
+    "prepublish": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/m2-modules/react/issues"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "styled-components": "^5.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/styled-components": "^5.1.14",
+    "jest": "^27.1.1",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
+  }
+}

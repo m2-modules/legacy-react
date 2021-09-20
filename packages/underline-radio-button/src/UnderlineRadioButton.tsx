@@ -56,15 +56,17 @@ const UnderlineRadioButton = (
     <StyledContainer onClick={onClick}>
       {value.map((each) => (
         <StyledLabel
-          key={each.display}
+          key={each.value}
           checked={each.value === checked}
           underlineColor={underlineColor}
           {...rest}
         >
           <StyledRadio
+            type="radio"
             name={name}
             value={each.value}
             checked={each.value === checked}
+            readOnly
           />
           {each.display ?? each.value}
         </StyledLabel>

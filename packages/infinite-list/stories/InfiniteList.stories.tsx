@@ -16,38 +16,28 @@ const SampleCard = styled.div`
 `
 
 const Template = (args: InfiniteListPropsType) => (
-  <InfiniteList {...args}>
-    {Array(30)
-      .fill('Card')
-      .map((item: string, idx: number) => (
-        <SampleCard key={idx}>
-          {item} {idx}
-        </SampleCard>
-      ))}
-  </InfiniteList>
+  <InfiniteList {...args}></InfiniteList>
 )
 
 export const Basic = Template.bind({})
-
-export const AddableList = Template.bind({})
-AddableList.args = {
+Basic.args = {
   fetchHandler: async (page: number): Promise<JSX.Element[]> => {
     return new Promise((resolve) => {
-      if (page >= 5) {
-        resolve([])
-      } else {
-        setTimeout(() => {
-          resolve(
-            Array(30)
-              .fill('Card')
-              .map((item: string, idx: number) => (
-                <SampleCard key={(page - 1) * 30 + idx}>
-                  {item} {(page - 1) * 30 + idx}
-                </SampleCard>
-              ))
-          )
-        }, 1000)
-      }
+      console.log('Fetch!')
+
+      setTimeout(() => {
+        page >= 5
+          ? resolve([])
+          : resolve(
+              Array(30)
+                .fill('Card')
+                .map((item: string, idx: number) => (
+                  <SampleCard key={(page - 1) * 30 + idx}>
+                    {item} {(page - 1) * 30 + idx}
+                  </SampleCard>
+                ))
+            )
+      }, 1000)
     })
   },
 } as InfiniteListPropsType

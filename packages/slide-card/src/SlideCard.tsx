@@ -42,7 +42,7 @@ const SlideCard = (props: SlideCardProps): JSX.Element => {
   const height: string | undefined = props.height
   const direction: SlideDirectionType = props.direction || 'horizontal'
   const fastSeeking: boolean = props.fastSeeking || false
-  const indicator: boolean = props.indicator || true
+  const indicator: boolean = props.indicator ?? true
   const indicatorColor: string | undefined = props.indicatorColor
 
   const children: JSX.Element[] = props.children

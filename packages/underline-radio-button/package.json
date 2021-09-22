@@ -1,8 +1,8 @@
 {
-  "name": "@m2-modules/{{ kebabCase name }}",
+  "name": "@m2-modules/underline-radio-button",
   "version": "0.0.1",
-  "description": "{{ titleCase name }} react component",
-  "author": "{{ authorName }} <{{ authorEmail }}>",
+  "description": "Underline Radio Button react component",
+  "author": "gincheong2 <gincheong2@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
   "license": "ISC",
   "main": "dist/index.js",

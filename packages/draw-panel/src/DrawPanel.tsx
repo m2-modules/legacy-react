@@ -1,7 +1,3 @@
-import React from 'react'
-
-import styled from 'styled-components'
-
 import {
   DrawPanelPositionTypes,
   IDrawPanelProps,
@@ -9,7 +5,11 @@ import {
   IStyledModal,
 } from './interfaces'
 
+import React from 'react'
+import styled from 'styled-components'
+
 const StyledModal = styled.div<IStyledModal>`
+  opacity: 0%;
   display: flex;
   position: absolute;
   left: 0px;
@@ -18,31 +18,39 @@ const StyledModal = styled.div<IStyledModal>`
   bottom: 0px;
   z-index: 9;
   background-color: ${(props) => props.backgroundColor};
+  transition: opacity 0.5s;
+  &[open] {
+    opacity: 100%;
+  }
 `
 
 const StyledDrawPanelContainer = styled.div<IStyledDrawPanelContainer>`
   position: fixed;
   background-color: ${(props) => props.backgroundColor};
+  transition: transform 0.5s;
   z-index: 10;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
   &.left {
-    left: 0px;
-    top: 0px;
-    bottom: 0px;
+    right: auto;
+    transform: translateX(-100%);
   }
   &.right {
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
+    left: auto;
+    transform: translateX(100%);
   }
   &.top {
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    bottom: auto;
+    transform: translateY(-100%);
   }
   &.bottom {
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: auto;
+    transform: translateY(100%);
+  }
+  &[open] {
+    transform: translate(0%, 0%);
   }
 `
 
@@ -55,11 +63,12 @@ const DrawPanel = (props: IDrawPanelProps): JSX.Element => {
   const children: JSX.Element[] = props.children
 
   return (
-    <StyledModal
-      backgroundColor={modalColor}
-      open={open}
-      onClick={closeHandler}
-    >
+    <>
+      <StyledModal
+        backgroundColor={modalColor}
+        open={open}
+        onClick={closeHandler}
+      ></StyledModal>
       <StyledDrawPanelContainer
         className={position}
         backgroundColor={panelColor}
@@ -67,7 +76,7 @@ const DrawPanel = (props: IDrawPanelProps): JSX.Element => {
       >
         {children}
       </StyledDrawPanelContainer>
-    </StyledModal>
+    </>
   )
 }
 

@@ -1,9 +1,7 @@
-import React from 'react'
-
 import { ComponentMeta } from '@storybook/react'
-
 import DrawPanel from '../src/DrawPanel'
 import { IDrawPanelProps } from '../src/interfaces'
+import React from 'react'
 
 export default {
   title: 'DrawPanel',
@@ -16,12 +14,13 @@ export default {
 } as ComponentMeta<typeof DrawPanel>
 
 const Template = (args: IDrawPanelProps): JSX.Element => (
-  <DrawPanel {...args}>
-    <div>First child element</div>
-    <div>Second child element</div>
-    <div>Third child element</div>
-  </DrawPanel>
+  <div>
+    <DrawPanel {...args}>
+      <div>First child element</div>
+      <div>Second child element</div>
+      <div>Third child element</div>
+    </DrawPanel>
+  </div>
 )
 
 export const Basic = Template.bind({})
-Basic.args = {}

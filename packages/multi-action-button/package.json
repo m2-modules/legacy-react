@@ -1,6 +1,6 @@
 {
   "name": "@m2-modules/multi-action-button",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multi Action Button react component",
   "author": "Jay Lee <jaylee.possible@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",
@@ -28,7 +28,7 @@
     "url": "https://github.com/m2-modules/react/issues"
   },
   "dependencies": {
-    "@m2-modules/ripple-effect-button": "^1.0.0",
+    "@m2-modules/ripple-effect-button": "^1.0.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "react": "^17.0.2",

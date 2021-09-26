@@ -1,4 +1,4 @@
-import InfiniteList, { InfiniteListPropsType } from '../src/InfiniteList'
+import InfiniteList, { InfiniteListProps } from '../src'
 
 import { ComponentMeta } from '@storybook/react'
 import React from 'react'
@@ -15,7 +15,7 @@ const SampleCard = styled.div`
   border: 1px solid #aaa;
 `
 
-const Template = (args: InfiniteListPropsType) => (
+const Template = (args: InfiniteListProps) => (
   <InfiniteList {...args}></InfiniteList>
 )
 
@@ -42,4 +42,4 @@ Basic.args = {
       }, 1000)
     })
   },
-} as InfiniteListPropsType
+} as InfiniteListProps

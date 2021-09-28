@@ -10,11 +10,11 @@ export interface IStyledDrawPanelContainer {
 
 export type DrawPanelPositionTypes = 'left' | 'right' | 'top' | 'bottom'
 
-export interface IDrawPanelProps {
+export type DrawPanelProps = {
   position?: DrawPanelPositionTypes
   modalColor?: string
   panelColor?: string
   open?: boolean
   closeHandler: () => void
-  children: JSX.Element[]
+  children: JSX.Element | JSX.Element[]
 }

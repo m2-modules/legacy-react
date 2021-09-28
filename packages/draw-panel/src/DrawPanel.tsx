@@ -19,7 +19,7 @@ const StyledModal = styled.div<IStyledModal>`
   bottom: 0px;
   z-index: 9;
   background-color: ${(props) => props.backgroundColor};
-  transition: opacity 0.5s;
+  transition: all 0.5s;
   &[open] {
     visibility: visible;
     opacity: 100%;

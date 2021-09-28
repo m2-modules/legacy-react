@@ -1,4 +1,4 @@
 import DrawPanel from './DrawPanel'
 
 export default DrawPanel
-export { IDrawPanelProps } from './interfaces'
+export { DrawPanelProps } from './interfaces'

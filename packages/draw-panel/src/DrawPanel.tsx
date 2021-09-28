@@ -1,6 +1,6 @@
 import {
   DrawPanelPositionTypes,
-  IDrawPanelProps,
+  DrawPanelProps,
   IStyledDrawPanelContainer,
   IStyledModal,
 } from './interfaces'
@@ -9,6 +9,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledModal = styled.div<IStyledModal>`
+  visibility: hidden;
   opacity: 0%;
   display: flex;
   position: absolute;
@@ -20,6 +21,7 @@ const StyledModal = styled.div<IStyledModal>`
   background-color: ${(props) => props.backgroundColor};
   transition: opacity 0.5s;
   &[open] {
+    visibility: visible;
     opacity: 100%;
   }
 `
@@ -54,13 +56,13 @@ const StyledDrawPanelContainer = styled.div<IStyledDrawPanelContainer>`
   }
 `
 
-const DrawPanel = (props: IDrawPanelProps): JSX.Element => {
+const DrawPanel = (props: DrawPanelProps): JSX.Element => {
   const position: DrawPanelPositionTypes = props.position || 'left'
   const modalColor: string = props.modalColor || 'rgba(0, 0, 0, 0.3)'
   const panelColor: string = props.panelColor || 'white'
   const open: boolean = props.open ?? false
   const closeHandler: () => void = props.closeHandler
-  const children: JSX.Element[] = props.children
+  const children: JSX.Element | JSX.Element[] = props.children
 
   return (
     <>

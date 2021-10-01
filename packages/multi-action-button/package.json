@@ -1,7 +1,6 @@
 {
   "name": "@m2-modules/multi-action-button",
   "version": "1.0.3",
-  "type": "module",
   "description": "Multi Action Button react component",
   "author": "Jay Lee <jaylee.possible@gmail.com>",
   "homepage": "https://github.com/m2-modules/react#readme",

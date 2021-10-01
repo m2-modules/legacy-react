@@ -1,6 +1,6 @@
 {
   "name": "@m2-modules/floating-label-input",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "Floating Label Input react component",
   "author": "gincheong2 <gincheong2@gmail.com>",

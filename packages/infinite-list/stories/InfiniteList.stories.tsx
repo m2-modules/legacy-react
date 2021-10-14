@@ -1,8 +1,10 @@
-import InfiniteList, { InfiniteListProps } from '../src'
+import React from 'react'
+
+import styled from 'styled-components'
 
 import { ComponentMeta } from '@storybook/react'
-import React from 'react'
-import styled from 'styled-components'
+
+import InfiniteList, { InfiniteListProps } from '../src'
 
 export default {
   title: 'InfiniteList',
@@ -33,9 +35,9 @@ Basic.args = {
           : resolve(
               Array(limit)
                 .fill('Card')
-                .map((item: string, idx: number) => (
+                .map((text: string, idx: number) => (
                   <SampleCard key={(page - 1) * limit + idx}>
-                    {item} {(page - 1) * limit + idx}
+                    {text} {(page - 1) * limit + idx}
                   </SampleCard>
                 ))
             )

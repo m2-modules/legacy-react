@@ -1,6 +1,5 @@
 type Props = {
-  fetchHandler: (page: number) => JSX.Element[] | Promise<JSX.Element[]>
-  initialPage?: number
+  onReach: () => void | Promise<void>
   threshHoldRate?: number
   children?: JSX.Element[]
 }

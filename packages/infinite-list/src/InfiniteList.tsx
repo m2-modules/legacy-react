@@ -1,10 +1,4 @@
-import React, {
-  createRef,
-  RefObject,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import React, { createRef, RefObject, useCallback, useEffect } from 'react'
 
 import styled from 'styled-components'
 
@@ -16,11 +10,8 @@ const StyledList = styled.ul`
 `
 
 const InfiniteList = (props: InfiniteListProps): JSX.Element => {
-  const { fetchHandler, threshHoldRate = 80, initialPage = 1 } = props
+  const { onReach, threshHoldRate = 80, children } = props
   const listRef: RefObject<HTMLUListElement> = createRef<HTMLUListElement>()
-
-  const [page, setPage] = useState<number>(initialPage)
-  const [children, setChildren] = useState<JSX.Element[]>(props.children || [])
 
   const isFetchRequired = useCallback(() => {
     const list: HTMLUListElement | null = listRef.current
@@ -43,14 +34,10 @@ const InfiniteList = (props: InfiniteListProps): JSX.Element => {
     if (!isFetchRequired()) return
 
     list.setAttribute('loading', '')
-    const newChildren: JSX.Element[] = await fetchHandler(page + 1)
-    if (newChildren?.length) {
-      setChildren([...children, ...newChildren])
-      setPage(page + 1)
-    }
+    await onReach()
 
     list.removeAttribute('loading')
-  }, [children, fetchHandler, isFetchRequired, listRef, page])
+  }, [isFetchRequired, listRef, onReach])
 
   useEffect(() => {
     if (listRef.current) {

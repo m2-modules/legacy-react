@@ -1,5 +1,6 @@
 import {
   IViewPartProps,
+  IWrapperProps,
   SlideCardProps,
   SlideDirectionType,
 } from './interfaces'
@@ -9,8 +10,10 @@ import CardIndicator from './CardIndicator'
 import registerScrollStopHandler from './utils/register-scroll-stop-handler'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<IWrapperProps>`
   position: relative;
+  width: ${(props) => props.width || '100vw'};
+  height: ${(props) => props.height || '100vh'};
 `
 
 const ViewPart = styled.div<IViewPartProps>`
@@ -87,7 +90,7 @@ const SlideCard = (props: SlideCardProps): JSX.Element => {
   }, [direction, containerRef, setScrollable])
 
   return (
-    <Wrapper>
+    <Wrapper width={width} height={height}>
       <ViewPart
         ref={containerRef}
         width={width}

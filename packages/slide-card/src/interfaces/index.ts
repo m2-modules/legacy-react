@@ -1,5 +1,10 @@
 export type SlideDirectionType = 'vertical' | 'horizontal'
 
+export interface IWrapperProps {
+  width?: string
+  height?: string
+}
+
 export interface IViewPartProps {
   width?: string
   height?: string

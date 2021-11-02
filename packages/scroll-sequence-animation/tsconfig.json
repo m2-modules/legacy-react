@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true
+  },
+  "exclude": [
+    "__tests__",
+    "stories",
+    "dist"
+  ]
+}

@@ -1,148 +1,159 @@
-import React, {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 
-import ScrollSequenceAnimationProps from './interfaces'
 import styled from 'styled-components'
+
 import useImagePreload from './hooks/use-image-preload'
 import useWindowResizeHandler from './hooks/use-window-resize-handler'
+import ScrollSequenceAnimationProps from './interfaces'
 
-const Wrapper = styled.div<{ height: number }>`
-  height: ${(props) => props.height}px;
+const Wrapper = styled.div<{ height: string }>`
+  height: ${(props) => props.height};
 `
 
-const StyledCanvas = styled.canvas<{ top?: string }>`
+const StyledCanvas = styled.canvas`
   position: sticky;
-  top: ${(props) => props.top || '50%'};
-  transform: ${(props) => (!props.top ? 'translateY(-50%)' : 'none')};
+
+  &.middle {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.top {
+    top: 0px;
+  }
+
+  &.bottom {
+    top: 100%;
+    transform: translateY(-100%);
+  }
 `
 
 const ScrollSequenceAnimation = ({
-  container,
+  containerRef,
   imagesURLs,
-  canvasHeight,
+  heightRatio,
   wrapperHeight,
   startScrollY,
   endScrollY,
-  topPadding,
+  verticalAlign = 'middle',
 }: ScrollSequenceAnimationProps): JSX.Element => {
   const wrapperRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
   const canvasRef: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(
     null
   )
+
   const [
     canvasContext,
     setCanvasContext,
   ] = useState<CanvasRenderingContext2D | null>(null)
+  const [canvasWidth, setCanvasWidth] = useState<number>(0)
+  const [canvasHeight, setCanvasHeight] = useState<number>(0)
+  const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0)
 
-  const [wrapper, setWrapper] = useState<HTMLDivElement>()
+  const [container, setContainer] = useState<Element | null>(null)
+
   useEffect(() => {
-    if (wrapperRef.current) setWrapper(wrapperRef.current)
-  }, [wrapper])
+    if (!containerRef.current) return
+    setContainer(containerRef.current)
+  }, [containerRef])
 
-  const canvasWidth: number = useMemo(() => {
-    if (!container) return 0
-    return container.offsetWidth
+  const [startY, setStartY] = useState<number | undefined>(startScrollY)
+  const [endY, setEndY] = useState<number | undefined>(endScrollY)
+
+  // Set startY
+  useEffect(() => {
+    if (startScrollY || !wrapperRef.current) return
+
+    let prevSibling: Element | null = wrapperRef.current.previousElementSibling
+    let totalHeight = 0
+    while (prevSibling) {
+      totalHeight += prevSibling.clientHeight
+      prevSibling = prevSibling.previousElementSibling
+    }
+
+    setStartY(totalHeight)
+  }, [wrapperRef, startScrollY])
+
+  // Set endY
+  useEffect(() => {
+    if (endScrollY || !wrapperRef.current || !canvasHeight) return
+
+    let prevSibling: Element | null = wrapperRef.current.previousElementSibling
+    let totalHeight = 0
+    while (prevSibling) {
+      totalHeight += prevSibling.clientHeight
+      prevSibling = prevSibling.previousElementSibling
+    }
+
+    setEndY(totalHeight + canvasHeight)
+  }, [wrapperRef, endScrollY, canvasHeight])
+
+  // Preloading images
+  useImagePreload(imagesURLs)
+
+  // Set canvas width
+  useEffect(() => {
+    if (!container) return
+    setCanvasWidth(container.clientWidth)
   }, [container])
 
-  startScrollY = useMemo(() => {
-    if (startScrollY) return startScrollY
-    if (!wrapper) return startScrollY
+  // Set canvas height
+  useEffect(() => {
+    if (!canvasWidth || !heightRatio) return
+    setCanvasHeight(canvasWidth * heightRatio)
+  }, [canvasWidth, heightRatio])
 
-    let prevElementSibling: Element | null = wrapper.previousElementSibling
-    let totalHeight = 0
-
-    while (prevElementSibling) {
-      totalHeight += prevElementSibling.clientHeight
-      prevElementSibling = prevElementSibling.previousElementSibling
-    }
-
-    return totalHeight
-  }, [startScrollY, wrapper])
-
-  endScrollY = useMemo(() => {
-    if (endScrollY) return endScrollY
-    if (!wrapper) return endScrollY
-
-    let prevElementSibling: Element | null = wrapper.previousElementSibling
-    let totalHeight = 0
-
-    while (prevElementSibling) {
-      totalHeight += prevElementSibling.clientHeight
-      prevElementSibling = prevElementSibling.previousElementSibling
-    }
-
-    return totalHeight + canvasHeight
-  }, [canvasHeight, endScrollY, wrapper])
-
+  // Set canvas context
   useEffect(() => {
     if (!canvasRef.current) return
     setCanvasContext(canvasRef.current.getContext('2d'))
   }, [canvasRef])
 
-  const currentFrameIndex = useCallback(() => {
-    if (!container || !startScrollY) return 0
-
-    const standardHeight: number = canvasHeight / imagesURLs.length
-    const index = Math.floor(
-      (container.scrollTop - startScrollY) / standardHeight
-    )
-    if (index < 0) return 0
-    if (!imagesURLs[index]) return imagesURLs.length - 1
-
-    return index
-  }, [canvasHeight, container, imagesURLs, startScrollY])
-
-  const render = useCallback(() => {
-    if (!canvasContext || !canvasWidth) return
-    const frameIndex = currentFrameIndex()
-    const image = new Image()
-    image.src = imagesURLs[frameIndex]
-    canvasContext.drawImage(image, 0, 0, canvasWidth, canvasHeight)
-  }, [canvasContext, canvasHeight, canvasWidth, currentFrameIndex, imagesURLs])
-
+  // Draw image
   useEffect(() => {
-    function onScrollHandler(): void {
-      requestAnimationFrame(render)
-    }
-
-    if (container) container.addEventListener('scroll', onScrollHandler)
-
-    return () => {
-      if (container) container.removeEventListener('scroll', onScrollHandler)
-    }
-  }, [container, render])
-
-  useWindowResizeHandler(() => requestAnimationFrame(render))
-
-  useImagePreload(imagesURLs)
-
-  useEffect(() => {
-    if (!canvasContext || !imagesURLs?.length || !canvasWidth || !canvasHeight)
-      return
+    if (!canvasContext || !canvasWidth || !canvasHeight) return
 
     const imageElement: HTMLImageElement = new Image()
-    imageElement.src = imagesURLs[0]
     imageElement.onload = () => {
-      canvasContext.drawImage(
-        imageElement,
-        0,
-        0,
-        canvasWidth as number,
-        canvasHeight
-      )
+      requestAnimationFrame(() => {
+        canvasContext.drawImage(imageElement, 0, 0, canvasWidth, canvasHeight)
+      })
     }
-  }, [canvasContext, imagesURLs, canvasWidth, canvasHeight])
+    console.log(currentFrameIndex)
+    imageElement.src = imagesURLs[currentFrameIndex]
+  }, [canvasContext, canvasHeight, canvasWidth, currentFrameIndex, imagesURLs])
+
+  // Add scroll event listener
+  useEffect(() => {
+    if (!container) return
+
+    const onScrollHandler = () => {
+      if (startY === undefined || endY === undefined) return
+
+      const standardHeight = (endY - startY) / imagesURLs.length
+      let index: number = Math.floor(
+        (container.scrollTop - startY) / standardHeight
+      )
+      if (index < 0) index = 0
+      if (!imagesURLs[index]) index = imagesURLs.length - 1
+
+      setCurrentFrameIndex(index)
+    }
+
+    container.addEventListener('scroll', onScrollHandler)
+    return () => container.removeEventListener('scroll', onScrollHandler)
+  }, [container, imagesURLs, startY, endY])
+
+  useWindowResizeHandler(() => {
+    if (!container) return
+    setCanvasWidth(container.clientWidth)
+    setCanvasHeight(canvasWidth * heightRatio)
+  })
 
   return (
     <Wrapper height={wrapperHeight} ref={wrapperRef}>
       <StyledCanvas
-        top={topPadding}
+        className={verticalAlign}
         ref={canvasRef}
         width={canvasWidth}
         height={canvasHeight}

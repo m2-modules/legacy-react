@@ -1,7 +1,9 @@
-import { ComponentMeta } from '@storybook/react'
-import DrawPanel from '../src/DrawPanel'
-import { IDrawPanelProps } from '../src/interfaces'
 import React from 'react'
+
+import { ComponentMeta } from '@storybook/react'
+
+import DrawPanel from '../src/DrawPanel'
+import { DrawPanelProps } from '../src/interfaces'
 
 export default {
   title: 'DrawPanel',
@@ -13,7 +15,7 @@ export default {
   },
 } as ComponentMeta<typeof DrawPanel>
 
-const Template = (args: IDrawPanelProps): JSX.Element => (
+const Template = (args: DrawPanelProps): JSX.Element => (
   <div>
     <DrawPanel {...args}>
       <div>First child element</div>

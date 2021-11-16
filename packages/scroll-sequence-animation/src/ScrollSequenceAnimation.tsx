@@ -1,10 +1,9 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 
+import ScrollSequenceAnimationProps from './interfaces'
 import styled from 'styled-components'
-
 import useImagePreload from './hooks/use-image-preload'
 import useWindowResizeHandler from './hooks/use-window-resize-handler'
-import ScrollSequenceAnimationProps from './interfaces'
 
 const Wrapper = styled.div<{ height: string }>`
   height: ${(props) => props.height};
@@ -119,7 +118,6 @@ const ScrollSequenceAnimation = ({
         canvasContext.drawImage(imageElement, 0, 0, canvasWidth, canvasHeight)
       })
     }
-    console.log(currentFrameIndex)
     imageElement.src = imagesURLs[currentFrameIndex]
   }, [canvasContext, canvasHeight, canvasWidth, currentFrameIndex, imagesURLs])
 

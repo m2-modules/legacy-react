@@ -14,6 +14,7 @@ export interface IViewPartProps {
   height?: string
   direction: SlideDirectionType
   fastSeeking: boolean
+  cardGap: number
 }
 
 export interface SlideCardProps {
@@ -26,6 +27,7 @@ export interface SlideCardProps {
   indicator?: boolean
   children: JSX.Element[]
   indicatorColor?: string
+  cardGap?: number
 }
 
 export interface ICircleProps extends React.HTMLAttributes<HTMLSpanElement> {

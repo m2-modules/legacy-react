@@ -1,4 +1,8 @@
 export type SlideDirectionType = 'vertical' | 'horizontal'
+export const enum AutoTravel {
+  OneWay = 'one-way',
+  RoundTrip = 'round-trip',
+}
 
 export interface IWrapperProps {
   width?: string
@@ -17,6 +21,8 @@ export interface SlideCardProps {
   height?: string
   direction?: SlideDirectionType
   fastSeeking?: boolean
+  autoTravel?: AutoTravel
+  timer?: number
   indicator?: boolean
   children: JSX.Element[]
   indicatorColor?: string

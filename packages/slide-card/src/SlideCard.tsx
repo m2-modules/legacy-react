@@ -1,14 +1,16 @@
+import React, { createRef, RefObject, useEffect, useState } from 'react'
+
+import styled from 'styled-components'
+
+import CardIndicator from './CardIndicator'
+import useScrollStop from './hooks/UseScrollStop'
 import {
+  AutoTravel,
   IViewPartProps,
   IWrapperProps,
   SlideCardProps,
   SlideDirectionType,
 } from './interfaces'
-import React, { RefObject, createRef, useEffect, useState } from 'react'
-
-import CardIndicator from './CardIndicator'
-import registerScrollStopHandler from './utils/register-scroll-stop-handler'
-import styled from 'styled-components'
 
 const Wrapper = styled.div<IWrapperProps>`
   position: relative;
@@ -48,35 +50,49 @@ const SlideCard = (props: SlideCardProps): JSX.Element => {
   const indicator: boolean = props.indicator ?? true
   const indicatorColor: string | undefined = props.indicatorColor
 
+  const autoTravel: AutoTravel | undefined = props.autoTravel
+  const timer: number = props.timer || 3
+
   const children: JSX.Element[] = props.children
 
   const containerRef: RefObject<HTMLDivElement> = createRef<HTMLDivElement>()
   const [scrollable, setScrollable] = useState<boolean>(false)
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
 
+  const [travelDirection, setTravelDirection] = useState<
+    'forward' | 'backward'
+  >('forward')
   useEffect(() => {
-    const container: HTMLDivElement | null = containerRef.current
-    if (!container) throw new Error('Failed to find container')
+    if (currentCardIndex === 0) return setTravelDirection('forward')
+    if (
+      autoTravel === AutoTravel.RoundTrip &&
+      currentCardIndex === children.length - 1
+    )
+      return setTravelDirection('backward')
+  }, [autoTravel, children.length, currentCardIndex])
 
-    registerScrollStopHandler(container, () => {
-      let cardIndex: number
-      if (direction === 'horizontal') {
-        if (container.scrollLeft <= 0) {
-          cardIndex = 0
-        } else {
-          cardIndex = Math.round(container.scrollLeft / container.clientWidth)
-        }
+  const scrollStop = useScrollStop(containerRef)
+  useEffect(() => {
+    if (!scrollStop || !containerRef.current) return
+
+    const container: HTMLElement = containerRef.current
+    let cardIndex: number
+    if (direction === 'horizontal') {
+      if (container.scrollLeft <= 0) {
+        cardIndex = 0
       } else {
-        if (container.scrollTop <= 0) {
-          cardIndex = 0
-        } else {
-          cardIndex = Math.round(container.scrollTop / container.clientHeight)
-        }
+        cardIndex = Math.round(container.scrollLeft / container.clientWidth)
       }
+    } else {
+      if (container.scrollTop <= 0) {
+        cardIndex = 0
+      } else {
+        cardIndex = Math.round(container.scrollTop / container.clientHeight)
+      }
+    }
 
-      setCurrentCardIndex(cardIndex)
-    })
-  }, [direction, containerRef, setCurrentCardIndex])
+    if (currentCardIndex !== cardIndex) setCurrentCardIndex(cardIndex)
+  }, [containerRef, currentCardIndex, direction, scrollStop])
 
   useEffect(() => {
     const container: HTMLDivElement | null = containerRef.current
@@ -88,6 +104,54 @@ const SlideCard = (props: SlideCardProps): JSX.Element => {
       setScrollable(container.scrollHeight > container.clientHeight)
     }
   }, [direction, containerRef, setScrollable])
+
+  useEffect(() => {
+    if (!autoTravel) return
+    const interval: NodeJS.Timeout = setInterval(() => {
+      if (!containerRef.current) return
+
+      const container: HTMLDivElement = containerRef.current
+      if (direction === 'horizontal') {
+        if (travelDirection === 'forward') {
+          container.scrollTo({
+            left: container.clientWidth * (currentCardIndex + 1),
+            top: 0,
+            behavior: 'smooth',
+          })
+        } else {
+          container.scrollTo({
+            left: container.clientWidth * (currentCardIndex - 1),
+            top: 0,
+            behavior: 'smooth',
+          })
+        }
+      } else {
+        if (travelDirection === 'forward') {
+          container.scrollTo({
+            left: 0,
+            top: container.clientHeight * (currentCardIndex + 1),
+            behavior: 'smooth',
+          })
+        } else {
+          container.scrollTo({
+            left: 0,
+            top: container.clientHeight * (currentCardIndex - 1),
+            behavior: 'smooth',
+          })
+        }
+      }
+    }, timer * 1000)
+
+    return () => clearInterval(interval)
+  }, [
+    autoTravel,
+    children.length,
+    containerRef,
+    currentCardIndex,
+    direction,
+    timer,
+    travelDirection,
+  ])
 
   return (
     <Wrapper width={width} height={height}>

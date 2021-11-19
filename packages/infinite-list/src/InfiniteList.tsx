@@ -6,8 +6,9 @@ import React, {
   useState,
 } from 'react'
 
-import { InfiniteListProps } from '.'
 import styled from 'styled-components'
+
+import { InfiniteListProps } from './'
 
 const StyledList = styled.ul`
   overflow: auto;
@@ -15,9 +16,10 @@ const StyledList = styled.ul`
 `
 
 const InfiniteList = (props: InfiniteListProps): JSX.Element => {
-  const { fetchHandler, threshHoldRate = 80 } = props
+  const { fetchHandler, threshHoldRate = 80, initialPage = 1 } = props
   const listRef: RefObject<HTMLUListElement> = createRef<HTMLUListElement>()
-  const [page, setPage] = useState<number>(0)
+
+  const [page, setPage] = useState<number>(initialPage)
   const [children, setChildren] = useState<JSX.Element[]>(props.children || [])
 
   const isFetchRequired = useCallback(() => {

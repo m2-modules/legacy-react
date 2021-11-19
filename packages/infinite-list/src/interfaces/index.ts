@@ -1,5 +1,5 @@
-type Props = {
-  onReach: () => void | Promise<void>
+interface Props {
+  fetchHandler: (page: number) => JSX.Element[] | Promise<JSX.Element[]>
   threshHoldRate?: number
   children?: JSX.Element[]
 }

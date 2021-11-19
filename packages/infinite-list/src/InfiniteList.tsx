@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react'
 
+import { InfiniteListProps } from '.'
 import styled from 'styled-components'
 
 const StyledList = styled.ul`
@@ -13,13 +14,7 @@ const StyledList = styled.ul`
   list-style: none;
 `
 
-export type InfiniteListPropsType = {
-  fetchHandler: (page: number) => JSX.Element[] | Promise<JSX.Element[]>
-  threshHoldRate?: number
-  children?: JSX.Element[]
-}
-
-const InfiniteList = (props: InfiniteListPropsType): JSX.Element => {
+const InfiniteList = (props: InfiniteListProps): JSX.Element => {
   const { fetchHandler, threshHoldRate = 80 } = props
   const listRef: RefObject<HTMLUListElement> = createRef<HTMLUListElement>()
   const [page, setPage] = useState<number>(0)

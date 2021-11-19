@@ -47,3 +47,26 @@ const Template = (args: InfiniteListProps) => {
 }
 
 export const Basic = Template.bind({})
+Basic.args = {
+  fetchHandler: async (page: number): Promise<JSX.Element[]> => {
+    return new Promise((resolve) => {
+      console.log('Fetch!')
+      console.log('Page: ' + page)
+      const limit = 20
+
+      setTimeout(() => {
+        page >= 30
+          ? resolve([])
+          : resolve(
+              Array(limit)
+                .fill('Card')
+                .map((item: string, idx: number) => (
+                  <SampleCard key={(page - 1) * limit + idx}>
+                    {item} {(page - 1) * limit + idx}
+                  </SampleCard>
+                ))
+            )
+      }, 1000)
+    })
+  },
+} as InfiniteListPropsType

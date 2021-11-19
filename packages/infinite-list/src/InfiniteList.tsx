@@ -1,17 +1,29 @@
-import React, { createRef, RefObject, useCallback, useEffect } from 'react'
+import React, {
+  createRef,
+  RefObject,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 import styled from 'styled-components'
-
-import { InfiniteListProps } from './'
 
 const StyledList = styled.ul`
   overflow: auto;
   list-style: none;
 `
 
-const InfiniteList = (props: InfiniteListProps): JSX.Element => {
-  const { onReach, threshHoldRate = 80, children } = props
+export type InfiniteListPropsType = {
+  fetchHandler: (page: number) => JSX.Element[] | Promise<JSX.Element[]>
+  threshHoldRate?: number
+  children?: JSX.Element[]
+}
+
+const InfiniteList = (props: InfiniteListPropsType): JSX.Element => {
+  const { fetchHandler, threshHoldRate = 80 } = props
   const listRef: RefObject<HTMLUListElement> = createRef<HTMLUListElement>()
+  const [page, setPage] = useState<number>(0)
+  const [children, setChildren] = useState<JSX.Element[]>(props.children || [])
 
   const isFetchRequired = useCallback(() => {
     const list: HTMLUListElement | null = listRef.current
@@ -34,10 +46,14 @@ const InfiniteList = (props: InfiniteListProps): JSX.Element => {
     if (!isFetchRequired()) return
 
     list.setAttribute('loading', '')
-    await onReach()
+    const newChildren: JSX.Element[] = await fetchHandler(page + 1)
+    if (newChildren?.length) {
+      setChildren([...children, ...newChildren])
+      setPage(page + 1)
+    }
 
     list.removeAttribute('loading')
-  }, [isFetchRequired, listRef, onReach])
+  }, [children, fetchHandler, isFetchRequired, listRef, page])
 
   useEffect(() => {
     if (listRef.current) {

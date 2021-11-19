@@ -1,4 +1,13 @@
 export type SlideDirectionType = 'vertical' | 'horizontal'
+export const enum AutoTravel {
+  OneWay = 'one-way',
+  RoundTrip = 'round-trip',
+}
+
+export interface IWrapperProps {
+  width?: string
+  height?: string
+}
 
 export interface IWrapperProps {
   width?: string
@@ -10,6 +19,7 @@ export interface IViewPartProps {
   height?: string
   direction: SlideDirectionType
   fastSeeking: boolean
+  cardGap: number
 }
 
 export interface SlideCardProps {
@@ -17,9 +27,12 @@ export interface SlideCardProps {
   height?: string
   direction?: SlideDirectionType
   fastSeeking?: boolean
+  autoTravel?: AutoTravel
+  timer?: number
   indicator?: boolean
   children: JSX.Element[]
   indicatorColor?: string
+  cardGap?: number
 }
 
 export interface ICircleProps extends React.HTMLAttributes<HTMLSpanElement> {

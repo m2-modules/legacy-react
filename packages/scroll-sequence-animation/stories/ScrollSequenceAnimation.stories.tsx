@@ -4,12 +4,8 @@ import styled from 'styled-components'
 
 import { ComponentMeta } from '@storybook/react'
 
+import ScrollSequenceAnimationProps from '../src/interfaces'
 import ScrollSequenceAnimation from '../src/ScrollSequenceAnimation'
-
-export default {
-  title: 'ScrollSequenceAnimation',
-  component: ScrollSequenceAnimation,
-} as ComponentMeta<typeof ScrollSequenceAnimation>
 
 const Container = styled.div`
   overflow: auto;
@@ -38,18 +34,23 @@ const EndContent = styled.div`
   );
 `
 
-export const Basic = (): JSX.Element => {
+export default {
+  title: 'ScrollSequenceAnimation',
+  component: ScrollSequenceAnimation,
+  argTypes: {
+    startScrollY: { control: { type: 'number' } },
+    endScrollY: { control: { type: 'number' } },
+    verticalAlign: {
+      control: {
+        type: 'radio',
+        options: ['top', 'middle', 'bottom'],
+      },
+    },
+  },
+} as ComponentMeta<typeof ScrollSequenceAnimation>
+
+export const Basic = (args: ScrollSequenceAnimationProps): JSX.Element => {
   const containerRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
-
-  const [canvasHeight, setCanvasHeight] = useState<number>()
-
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    const container: HTMLDivElement = containerRef.current
-    setCanvasHeight((container.offsetWidth / 3) * 2)
-  }, [containerRef])
-
   const imageURLs = Array(121)
     .fill('')
     .map(
@@ -63,11 +64,11 @@ export const Basic = (): JSX.Element => {
     <Container ref={containerRef}>
       <BeginContent />
       <ScrollSequenceAnimation
-        container={containerRef.current}
+        containerRef={containerRef}
         imagesURLs={imageURLs}
-        canvasHeight={canvasHeight}
-        wrapperHeight={2400}
-        topPadding={'-20px'}
+        heightRatio={2 / 3}
+        wrapperHeight={'2400px'}
+        {...args}
       />
       <EndContent />
     </Container>

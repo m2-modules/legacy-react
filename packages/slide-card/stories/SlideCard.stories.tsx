@@ -1,7 +1,9 @@
-import { ComponentMeta } from '@storybook/react'
 import React from 'react'
-import SlideCard from '../src/SlideCard'
+
+import { ComponentMeta } from '@storybook/react'
+
 import { SlideCardProps } from '../src/interfaces'
+import SlideCard from '../src/SlideCard'
 
 export default {
   title: 'SlideCard',
@@ -24,6 +26,7 @@ ImageCard.args = {
 export const ComponentCard = Template.bind({})
 ComponentCard.args = {
   indicator: false,
+  // autoTravel: AutoTravel.OneWay,
   children: Array(5)
     .fill('')
     .map((_, idx: number) => (

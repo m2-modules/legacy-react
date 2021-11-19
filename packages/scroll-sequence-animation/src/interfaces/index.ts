@@ -1,13 +1,12 @@
-import { RefObject } from 'react'
-
 interface ScrollSequenceAnimationProps {
-  containerRef: RefObject<Element>
+  container: HTMLElement
   imagesURLs: string[]
-  heightRatio: number
-  wrapperHeight: string
+  canvasWidth?: number
+  canvasHeight: number
+  wrapperHeight: number
   startScrollY?: number
   endScrollY?: number
-  verticalAlign?: 'top' | 'middle' | 'bottom'
+  topPadding?: string
 }
 
 export default ScrollSequenceAnimationProps

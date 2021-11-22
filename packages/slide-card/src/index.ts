@@ -1,4 +1,4 @@
 import SlideCard from './SlideCard'
 
 export default SlideCard
-export { SlideCardProps } from './interfaces'
+export { SlideCardProps, AutoTravel } from './interfaces'

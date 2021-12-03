@@ -21,7 +21,7 @@ const FloatingButton = styled.button<{
   bottom: ${(props) => props.verticalMargin};
 
   opacity: ${(props) => (props.hideButton ? 0 : 1)};
-  transition: ${(props) => (props.animation ? 'opacity 0.1s' : 'none')};
+  transition: ${(props) => (props.animation ? 'opacity .5s' : 'none')};
 
   &.right-bottom-corner {
     right: ${(props) => props.horizontalMargin};

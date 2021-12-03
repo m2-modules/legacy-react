@@ -12,7 +12,8 @@ export interface AutoHideOptions {
 
 export interface FloatingActionButtonProps {
   position?: ButtonPosition
-  buttonMargin?: string
+  verticalMargin?: string
+  horizontalMargin?: string
   autoHideOptions?: AutoHideOptions
   children: JSX.Element
 }

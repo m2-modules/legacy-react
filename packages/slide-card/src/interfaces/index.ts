@@ -1,5 +1,5 @@
 export type SlideDirectionType = 'vertical' | 'horizontal'
-export const enum AutoTravel {
+export enum AutoTravel {
   OneWay = 'one-way',
   RoundTrip = 'round-trip',
 }

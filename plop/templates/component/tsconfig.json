@@ -12,6 +12,7 @@
     "declarationMap": true
   },
   "exclude": [
+    "node_modules",
     "__tests__",
     "stories",
     "dist"

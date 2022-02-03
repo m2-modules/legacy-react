@@ -23,8 +23,7 @@
     ],
     "rules": {},
     "ignorePatterns": [
-        "packages/*/dist",
-        "**/webpack.config.js"
+        "packages/*/dist"
     ],
     "settings": {
         "react": {

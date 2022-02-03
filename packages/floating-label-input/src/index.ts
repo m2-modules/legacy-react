@@ -1,4 +1,4 @@
 import FloatingInputLabel from './FloatingLabelInput'
 
 export default FloatingInputLabel
-export { FloatingLabelInputProps } from './interfaces'
+export type { FloatingLabelInputProps } from './interfaces'
